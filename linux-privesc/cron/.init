@@ -1,0 +1,8 @@
+#!/opt/pwn.college/bash
+
+apt install cron 
+systemctl enable cron
+service cron start
+echo -e '#!/bin/bash\n\n# Write your script here' > /media/script.sh
+chmod 777 /media/script.sh
+echo '* * * * * root /media/script.sh' >> /etc/crontab

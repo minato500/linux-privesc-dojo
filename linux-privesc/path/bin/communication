@@ -1,0 +1,30 @@
+#!/opt/pwn.college/bash
+
+read -r -p "Enter IPv4 address to ping: " ip_address
+
+if [[ "$ip_address" =~ [[:space:]] ]] || [[ "$ip_address" == "" ]]; then
+    printf 'Invalid input: contains whitespace or is empty\n' >&2
+    exit 1
+fi
+
+if [[ "$ip_address" == -* ]]; then
+    printf 'Invalid input: starts with -\n' >&2
+    exit 1
+fi
+
+if ! [[ "$ip_address" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
+    printf 'Invalid IPv4 address format\n' >&2
+    exit 2
+fi
+
+IFS='.' read -r o1 o2 o3 o4 <<< "$ip_address"
+for o in $o1 $o2 $o3 $o4; do
+    if ! [[ $o =~ ^[0-9]+$ ]] || (( o < 0 || o > 255 )); then
+        printf 'Invalid IPv4 address: octet out of range\n' >&2
+        exit 3
+    fi
+done
+
+timeout 10 ping -c 4 -W 2 -- "$ip_address"
+exit $?
+

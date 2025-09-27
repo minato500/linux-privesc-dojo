@@ -1,0 +1,6 @@
+id: linux-privesc-dojo
+name: Linux PrivEsc
+type: topic
+image: pwncollege/challenge-legacy:latest
+modules:
+  - id: linux-privesc

@@ -1,0 +1,8 @@
+name: Linux Privilege Escalation
+challenges:
+  - id: suid
+    name: SUID Bit
+  - id: path
+    name: Path
+  - id: cron
+    name: Cron
